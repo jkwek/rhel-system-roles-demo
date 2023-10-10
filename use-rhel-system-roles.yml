@@ -1,0 +1,40 @@
+---
+- name: Set up rsyslog server using RHEL System Roles
+  hosts: syslog_servers
+
+  tasks: 
+    - name: Set up rsyslog server
+      ansible.builtin.include_role:
+        name: rhel-system-roles.logging
+
+    - name: Open firewall ports
+      ansible.builtin.include_role:
+        name: rhel-system-roles.firewall
+      vars:
+        firewall:
+          - service: syslog
+            port: 514/tcp
+            state: enabled
+   
+
+- name: Set up rsyslog client using RHEL System Roles
+  hosts: syslog_clients
+  roles: 
+    - rhel-system-roles.logging
+
+
+- name: Update kernel settings using RHEL System Roles
+  hosts: all
+  vars:
+    kernel_settings_sysctl:
+      - name: net.ipv4.ip_forward
+        value: 1
+      - name: net.ipv6.conf.all.forwarding 
+        value: 1
+      - name: kernel.threads-max
+        value: 379724
+
+  tasks:
+    - name: Set kernel parameters
+      ansible.builtin.include_role: 
+        name: rhel-system-roles.kernel_settings

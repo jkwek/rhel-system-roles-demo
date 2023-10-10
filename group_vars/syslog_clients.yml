@@ -1,0 +1,18 @@
+logging_inputs:
+  - name: basic_input
+    type: basics
+logging_outputs:
+  - name: forward_output0
+    type: forwards
+    severity: info
+    target: rhel8-rsr1.work
+    udp_port: 514
+  - name: forward_output1
+    type: forwards
+    facility: mail
+    target: rhel8-rsr1.work
+    tcp_port: 514
+logging_flows:
+  - name: flows0
+    inputs: [basic_input]
+    outputs: [forward_output0, forward_output1]

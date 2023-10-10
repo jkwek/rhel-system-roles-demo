@@ -1,0 +1,5 @@
+[syslog_servers]
+rhel8-rsr1.work
+
+[syslog_clients]
+rhel8-rsr2.work
