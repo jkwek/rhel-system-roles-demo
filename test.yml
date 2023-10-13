@@ -1,5 +1,0 @@
----
-- name: Set up rsyslog client using RHEL System Roles
-  hosts: syslog_clients
-  roles: 
-    - rhel-system-roles.logging
